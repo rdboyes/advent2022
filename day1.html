@@ -137,7 +137,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div><div class="column" style="width:49%;">
 <section id="julia" class="level1">
 <h1>Julia</h1>
-<p>Load the data into a <code>DataFrame</code> using <code>DataFrames</code> and <code>DelimitedFiles</code>.</p>
+<p>Load the data into a <code>DataFrame</code> using <code>CSV</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DelimitedFiles</span>, <span class="bu">CSV</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span>, <span class="bu">DataFramesMeta</span></span>
@@ -172,7 +172,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div><div class="column" style="width:2%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:49%;">
-<p>Calculate two lagged sums and sum the whole table using <code>ShiftedArrays</code>.</p>
+<p>Group the individuals by adding a cumulative sum of missing values, then sum within groups.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">solve_day</span>(df)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  p2 <span class="op">=</span> <span class="pp">@chain</span> df <span class="cf">begin</span></span>
@@ -232,7 +232,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(<span class="pp">@benchmark</span> <span class="fu">solve_day</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>BenchmarkTools.TrialEstimate: 
-  time:             197.500 μs
+  time:             201.200 μs
   gctime:           0.000 ns (0.00%)
   memory:           107.63 KiB
   allocs:           613</code></pre>
