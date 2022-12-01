@@ -85,7 +85,7 @@ solve_day <- function(df){
 
 ::: {.column width="49%"}
 
-Calculate two lagged sums and sum the whole table using `ShiftedArrays`.
+Group the individuals by adding a cumulative sum of missing values, then sum within groups.
 
 ```{julia}
 #| output: false
