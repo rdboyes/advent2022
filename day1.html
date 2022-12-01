@@ -117,6 +117,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<p>Given a txt file consisting of one column of integers with missing rows indicating the start of a new individual, find: - The individual with the highest sum - The three individuals with the highest sum</p>
 <div class="columns">
 <div class="column" style="width:49%;">
 <section id="r" class="level1">
@@ -157,10 +158,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Group the individuals by adding a cumulative sum of missing values, then sum within groups.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>solve_day <span class="ot">&lt;-</span> <span class="cf">function</span>(df){</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  prep <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">cumsum</span>(<span class="fu">is.na</span>(num))) <span class="sc">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">total_cal =</span> <span class="fu">sum</span>(num, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  prep <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">cumsum</span>(<span class="fu">is.na</span>(num))) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(id) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">total_cal =</span> <span class="fu">sum</span>(num, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(total_cal))</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  p1 <span class="ot">&lt;-</span> <span class="fu">slice</span>(prep, <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(total_cal)</span>
@@ -220,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 2
     median mem_alloc
   &lt;bch:tm&gt; &lt;bch:byt&gt;
-1   11.8ms     200KB</code></pre>
+1   11.8ms     192KB</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:2%;">
@@ -232,7 +233,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(<span class="pp">@benchmark</span> <span class="fu">solve_day</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>BenchmarkTools.TrialEstimate: 
-  time:             201.200 μs
+  time:             196.100 μs
   gctime:           0.000 ns (0.00%)
   memory:           107.63 KiB
   allocs:           613</code></pre>

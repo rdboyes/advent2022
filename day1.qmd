@@ -1,13 +1,37 @@
 ---
 title: "Day 1"
-format: html
+format: hugo-md
 fontsize: 10pt
 theme: journal
+monofont: "Fira Code Retina"
 execute: 
   warning: false
   error: false
   message: false
 ---
+
+# Problem
+
+Given a txt file consisting of one column of integers with missing rows indicating the start of a new individual, find: 
+
+- The individual with the highest sum
+- The three individuals with the highest sum
+
+# Thoughts
+
+This was a relatively straightforward problem in R. Using `cumsum` on missing values to create an index is an idiom that comes up a lot in Advent problems. 
+
+Translating to Julia, I had a couple of minor issues. 
+
+- Forgot that `ismissing` would need to be broadcast, which ruined my groups in Julia for a bit. 
+- I tried a couple of suggestions that didn't work correctly for me before finding the `* -1` strategy for a descending sort in `@orderby`. 
+
+On the plus side, 
+
+- The `@aside` macro is a really nice feature when you want two outputs. 
+- As expected, the Julia version is way faster!
+
+# Code
 
 :::: {.columns}
 
@@ -64,10 +88,10 @@ Group the individuals by adding a cumulative sum of missing values, then sum wit
 
 ```{r}
 solve_day <- function(df){
-  prep <- df %>% 
-    mutate(id = cumsum(is.na(num))) %>%
-    group_by(id) %>%
-    summarize(total_cal = sum(num, na.rm = TRUE)) %>%
+  prep <- df |>
+    mutate(id = cumsum(is.na(num))) |>
+    group_by(id) |>
+    summarize(total_cal = sum(num, na.rm = TRUE)) |>
     arrange(desc(total_cal))
 
   p1 <- slice(prep, 1) |> pull(total_cal)
