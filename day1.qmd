@@ -37,7 +37,7 @@ df <- tibble(
 
 # Julia
 
-Load the data into a `DataFrame` using `DataFrames` and `DelimitedFiles`.
+Load the data into a `DataFrame` using `CSV`.
 ```{julia}
 #| echo: true
 #| output: false
